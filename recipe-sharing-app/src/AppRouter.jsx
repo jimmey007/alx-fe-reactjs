@@ -1,8 +1,8 @@
 // src/AppRouter.jsx
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Home from './pages/Home'; // Placeholder for the home page
-import RecipeDetails from './pages/RecipeDetails'; // Placeholder for the recipe details page
+import Home from './pages/Home';
+import RecipeDetails from './pages/RecipeDetails';
 
 const AppRouter = () => {
   return (
