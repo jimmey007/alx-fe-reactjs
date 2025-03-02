@@ -1,15 +1,15 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from './Navbar';
-import Home from './Home';
-import About from './About';
-import Services from './Services';
-import Contact from './Contact';
-import Footer from './Footer'; // Optional
+import Navbar from './components/Navbar'; // Import the Navbar component
+import Home from './components/Home';
+import About from './components/About';
+import Services from './components/Services';
+import Contact from './components/Contact';
 
 function App() {
   return (
     <Router>
+      {/* Include the Navbar component */}
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -17,7 +17,6 @@ function App() {
         <Route path="/services" element={<Services />} />
         <Route path="/contact" element={<Contact />} />
       </Routes>
-      <Footer /> {/* Optional */}
     </Router>
   );
 }
