@@ -1,11 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './Components/Navbar.jsx'; // Import the Navbar component
-import Home from './components/Home';
-import About from './components/About';
-import Services from './components/Services';
-import Contact from './components/Contact';
-import Navbar from './Components/Navbar.jsx';
+import Home from './components/Home.jsx';
+import About from './components/About.jsx';
+import Services from './components/Services.jsx';
+import Contact from './components/Contact.jsx';
+import Navbar from './components/Navbar.jsx';
 
 function App() {
   return (
