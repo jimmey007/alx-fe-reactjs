@@ -2,6 +2,13 @@ import React from 'react';
 
 const UserProfile = ({ name, bio, avatarUrl }) => {
   return (
+    <div class="flex items-center justify-center">
+  <img 
+    src="profile-image.jpg" 
+    alt="Profile Image" 
+    class="w-24 h-24 rounded-full transition-transform duration-300 ease-in-out hover:scale-110"
+  />
+
     <div className="container mx-auto">
       <div className="
         bg-white 
@@ -40,7 +47,9 @@ const UserProfile = ({ name, bio, avatarUrl }) => {
         </div>
       </div>
     </div>
+    </div>
   );
+
 };
 
 export default UserProfile;
