@@ -42,6 +42,12 @@ const HomePage = () => {
               >
                 View Recipe →
               </a>
+              <a
+  href={`/recipe/${recipe.id}`}
+  className="mt-4 inline-block text-blue-500 hover:text-blue-700"
+>
+  View Recipe →
+</a>
             </div>
           </div>
         ))}
