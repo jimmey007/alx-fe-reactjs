@@ -2,24 +2,21 @@
 import React, { useState } from 'react';
 
 const AddRecipeForm = () => {
-  // State for form data
   const [formData, setFormData] = useState({
     title: '',
     ingredients: '',
     steps: ''
   });
-
-  // State for validation errors
+  
   const [errors, setErrors] = useState({});
 
-  // Handle input changes
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  // Using explicit target.value with destructuring
+  const handleChange = ({ target: { name, value } }) => {
     setFormData((prev) => ({
       ...prev,
       [name]: value
     }));
-    // Clear error when user starts typing
+    
     if (errors[name]) {
       setErrors((prev) => ({
         ...prev,
@@ -28,7 +25,6 @@ const AddRecipeForm = () => {
     }
   };
 
-  // Validation function
   const validateForm = () => {
     const newErrors = {};
     
@@ -52,7 +48,6 @@ const AddRecipeForm = () => {
     return newErrors;
   };
 
-  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
     
@@ -63,15 +58,12 @@ const AddRecipeForm = () => {
       return;
     }
 
-    // If validation passes, proceed with form submission
-    // In a real app, this would be an API call
     console.log('Recipe submitted:', {
       title: formData.title,
       ingredients: formData.ingredients.split('\n').filter(item => item.trim()),
       steps: formData.steps
     });
 
-    // Reset form after successful submission
     setFormData({
       title: '',
       ingredients: '',
@@ -91,7 +83,6 @@ const AddRecipeForm = () => {
             </h2>
 
             <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Title Field */}
               <div>
                 <label 
                   htmlFor="title" 
@@ -115,7 +106,6 @@ const AddRecipeForm = () => {
                 )}
               </div>
 
-              {/* Ingredients Field */}
               <div>
                 <label 
                   htmlFor="ingredients" 
@@ -139,7 +129,6 @@ const AddRecipeForm = () => {
                 )}
               </div>
 
-              {/* Preparation Steps Field */}
               <div>
                 <label 
                   htmlFor="steps" 
@@ -163,7 +152,6 @@ const AddRecipeForm = () => {
                 )}
               </div>
 
-              {/* Submit Button */}
               <div>
                 <button
                   type="submit"
