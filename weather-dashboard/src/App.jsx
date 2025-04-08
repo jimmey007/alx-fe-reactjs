@@ -1,52 +1,64 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import SearchBar from './components/SearchBar';
-import WeatherCard from './components/WeatherCard';
-import ErrorMessage from './components/ErrorMessage';
+import { useState, useEffect } from "react";
+import SearchBar from "./components/SearchBar";
+import WeatherCard from "./components/WeatherCard";
+import ErrorMessage from "./components/ErrorMessage";
+import axios from "axios";
+
+const API_KEY = "fe30a37db4bd66177fb59f3d131bad08"; // Your OpenWeatherMap API key
 
 function App() {
+  const [city, setCity] = useState("");
   const [weatherData, setWeatherData] = useState(null);
   const [error, setError] = useState(null);
-  const [city, setCity] = useState('');
-  const API_KEY = 'YOUR_OPENWEATHERMAP_API_KEY'; // Replace with your API key
+  const [loading, setLoading] = useState(false);
 
   const fetchWeather = async (searchCity) => {
+    setLoading(true);
+    setError(null);
     try {
       const response = await axios.get(
         `https://api.openweathermap.org/data/2.5/weather?q=${searchCity}&appid=${API_KEY}&units=metric`
       );
       setWeatherData(response.data);
-      setError(null);
     } catch (err) {
-      setError('City not found or API error occurred');
+      setError("City not found or there was an issue fetching the weather data.");
       setWeatherData(null);
+    } finally {
+      setLoading(false);
     }
   };
-
-  useEffect(() => {
-    // Optional: Fetch weather for a default city on load
-    fetchWeather('London');
-  }, []);
 
   const handleSearch = (searchCity) => {
     setCity(searchCity);
     fetchWeather(searchCity);
   };
 
+  // Auto-update every 5 minutes (300,000 ms)
+  useEffect(() => {
+    if (city) {
+      fetchWeather(city);
+      const interval = setInterval(() => fetchWeather(city), 300000);
+      return () => clearInterval(interval);
+    }
+  }, [city]);
+
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center py-8">
+    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-4">
       <h1 className="text-3xl font-bold mb-6">Weather Dashboard</h1>
       <SearchBar onSearch={handleSearch} />
+      {loading && <p className="mt-4">Loading...</p>}
       {error && <ErrorMessage message={error} />}
-      {weatherData && <WeatherCard weather={weatherData} />}
+      {weatherData && <WeatherCard data={weatherData} />}
+      {weatherData && (
+        <button
+          className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+          onClick={() => fetchWeather(city)}
+        >
+          Refresh
+        </button>
+      )}
     </div>
   );
 }
-useEffect(() => {
-  const interval = setInterval(() => {
-    if (city) fetchWeather(city);
-  }, 300000); // Update every 5 minutes
 
-  return () => clearInterval(interval); // Cleanup on unmount
-}, [city]);
 export default App;
